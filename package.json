@@ -1,7 +1,7 @@
 {
-  "name": "fill-out--your-app-name",
+  "name": "tic-tac-toe-ui",
   "version": "0.0.0",
-  "description": "fill-out--your-description",
+  "description": "A UI for playing games of Tic-tac-toe via an accompanying API. Used as a playground for learning web stacks and general messing about.",
   "main": "server/init.js",
   "scripts": {
     "lint": "npm run -s lint:syntax && npm run -s lint:types",
@@ -16,7 +16,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leafrogers/fill-out--your-app-name.git"
+    "url": "git+https://github.com/leafrogers/tic-tac-toe-ui.git"
   },
   "license": "MIT",
   "dependencies": {
