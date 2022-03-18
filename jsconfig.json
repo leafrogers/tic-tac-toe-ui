@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "checkJs": true,
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "strict": true,
+    "target": "ES2021"
+  },
+  "include": ["**/*"]
+}
