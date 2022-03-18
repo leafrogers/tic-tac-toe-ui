@@ -1,8 +1,9 @@
-# :gear: fill-out--your-app-name
+# Tic-tac-toe UI
 
-[![CircleCI](https://circleci.com/gh/leafrogers/fill-out--your-app-name.svg?style=svg)](https://circleci.com/gh/leafrogers/fill-out--your-app-name)
+[![CircleCI](https://circleci.com/gh/leafrogers/tic-tac-toe-ui.svg?style=svg)](https://circleci.com/gh/leafrogers/tic-tac-toe-ui)
 
-fill-out--your-description
+A UI for playing games of Tic-tac-toe via an [accompanying
+API](https://github.com/leafrogers/tic-tac-toe-api).
 
 - [:thinking: What is this for?](#thinking-what-is-this-for)
 - [:dart: Endpoints](#dart-endpoints)
@@ -11,20 +12,23 @@ fill-out--your-description
 - [:pager: Contact](#pager-contact)
 - [Licence](#licence)
 
-## :thinking: What is this for?
+## :thinking: Why does this repo exist?
 
-fill-out--what-is-this-repo-for
+This repo exists so that the [the author](https://github.com/leafrogers) can
+use it a playground for learning different web stacks, and for general tinkering.
+
+Please do feel free to use this code, add GitHub issues, or open PRs, but know
+that you may not get a timely response.
 
 ## :dart: Endpoints
 
-fill-out--list-your-endpoints-and-why-they-exist
+TBC
 
 ## :warning: Requirements
 
 This app requires the following to be installed to be able to run locally.
 
 - [Node](https://www.nodejs.org) (version 16.x.x)
-- fill-out--any-other-requirements
 
 ## :running: Running locally
 
@@ -38,7 +42,7 @@ Steps:
 ### :pager: Contact
 
 If you have any questions or comments about this app, or need help using it,
-please [raise an issue](https://github.com/leafrogers/fill-out--your-app-name/issues).
+please [raise an issue](https://github.com/leafrogers/tic-tac-toe-ui/issues).
 
 ---
 

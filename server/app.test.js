@@ -19,11 +19,6 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 
 	beforeEach(() => {
 		config.APP_FRIENDLY_NAME = 'Test Title';
-		nock(config.API_URL)
-			.get('/pokemon')
-			.reply(200, {
-				results: [{ name: 'Raymond Holt' }, { name: 'Amy Santiago' }]
-			});
 	});
 
 	afterEach(() => {
@@ -32,48 +27,6 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 	});
 
 	afterAll(() => nock.enableNetConnect());
-
-	it('serves a default route', async () => {
-		const { status } = await request.get('/');
-
-		expect(status).toBe(200);
-	});
-
-	describe('Checking for the expected HTML payload', () => {
-		/**
-		 * @type {import("superagent").Response}
-		 */
-		let response;
-
-		beforeEach(async () => {
-			config.APP_FRIENDLY_NAME = 'Test Title';
-			response = await request.get('/');
-		});
-
-		afterEach(() => {
-			config.APP_FRIENDLY_NAME = originalFriendlyTitle;
-		});
-
-		it('renders the config file’s app title as the HTML title', () => {
-			expect(response.text).toMatch('<title>Test Title</title>');
-		});
-
-		it('renders a no-results message when no results are available because of a non-retriable API error', async () => {
-			nock.cleanAll();
-			nock(config.API_URL).get('/pokemon').reply(418).persist();
-			const response = await request.get('/');
-			expect(response.text).toMatch('<p>No pokemon in the list</p>');
-		});
-
-		it('renders a public-facing error message when there’s an issue with fetching (catching?) Pokemon from the API', async () => {
-			nock.cleanAll();
-			nock(config.API_URL).get('/pokemon').reply(418).persist();
-			const response = await request.get('/');
-			expect(response.text).toMatch(
-				'<p>An error happened while attempting to fetch Pokemon data</p>'
-			);
-		});
-	});
 
 	describe('Not found page', () => {
 		/**
