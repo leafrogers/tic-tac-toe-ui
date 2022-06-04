@@ -1,4 +1,4 @@
-import { logger } from '../../utils.js';
+import { logger } from '../../helpers.js';
 import { getData } from './model.js';
 import view from './view.js';
 
