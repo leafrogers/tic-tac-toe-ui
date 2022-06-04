@@ -1,8 +1,6 @@
-import prettier from 'prettier';
-
 /**
  * @param {object} object
- * */
+ */
 export const assertNoUndefinedValues = (object) => {
 	const keysWithUndefinedValues = [];
 
@@ -29,8 +27,23 @@ export const logger = console;
 export const stripWhitespace = (string) => string.replaceAll(/\s/g, '');
 
 /**
- * @param {string} messyHtmlString
+ * @param {object} settings
+ * @param {string} settings.body
+ * @param {string} settings.title
  */
-export const tidyHtml = (messyHtmlString) => {
-	return prettier.format(messyHtmlString, { parser: 'html', useTabs: true });
+export const toHtmlDocString = ({ body, title }) => {
+	return `<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Play tic-tac-toe (or noughts and crosses): the most boring game ever.">
+		<title>${title}</title>
+	</head>
+	<body>
+		<main>
+			${body.trim()}
+		</main>
+	</body>
+</html>`;
 };

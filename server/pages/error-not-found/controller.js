@@ -1,4 +1,4 @@
-import { logger, tidyHtml } from '../../utils.js';
+import { logger } from '../../utils.js';
 import { getData } from './model.js';
 import view from './view.js';
 
@@ -18,7 +18,7 @@ const controller = async (req, res, next) => {
 
 		const html = view(data);
 
-		res.status(404).send(tidyHtml(html));
+		res.status(404).send(html);
 	} catch (err) {
 		next(err);
 	}
