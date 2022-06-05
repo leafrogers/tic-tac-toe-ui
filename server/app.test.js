@@ -7,6 +7,7 @@ import config from './config.js';
 
 const request = supertest(app);
 const originalFriendlyTitle = config.APP_FRIENDLY_NAME;
+const originalIsProduction = config.IS_PRODUCTION;
 
 jest.spyOn(global.console, 'debug').mockImplementation(() => {});
 jest.spyOn(global.console, 'error').mockImplementation(() => {});
@@ -23,6 +24,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 
 	afterEach(() => {
 		config.APP_FRIENDLY_NAME = originalFriendlyTitle;
+		config.IS_PRODUCTION = originalIsProduction;
 		nock.cleanAll();
 	});
 
@@ -51,32 +53,23 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 
 	describe('Catch-all error page for unexpected scenarios', () => {
 		/**
-		 * @type {import("superagent").Response}
+		 * @type {supertest.Response}
 		 */
 		let response;
 
 		beforeEach(async () => {
-			const badAppName = () => {};
-			badAppName.toString = () => {
-				throw new Error(
-					'This is to force an error during the processing of a web request'
-				);
-			};
-			// @ts-ignore
-			config.APP_FRIENDLY_NAME = badAppName;
-			response = await request.get('/');
+			config.IS_PRODUCTION = true;
+			response = await request.get('/throw-error-in-prod');
 		});
 
 		it('renders a fallback document title', () => {
 			expect(response.text).toMatch(
-				'<title>A confusing error happened</title>'
+				'<h1>An error happened (405) — Test Title</h1>'
 			);
 		});
 
 		it('renders a public-facing error message', () => {
-			expect(response.text).toMatch(
-				'Something unexpected happened that messed up the serving of this page'
-			);
+			expect(response.text).toMatch('Something went wrong.');
 		});
 	});
 });
