@@ -8,7 +8,7 @@ import config from '../config.js';
 export const controller = async (req, res) => {
 	const requestId = req.get('X-Request-ID');
 	const acceptsHtml = Boolean(req.accepts('html'));
-	const data = getData({ cspNonce: res.locals.cspNonce });
+	const data = getData();
 
 	logger.debug({
 		event: 'ROUTE_NOT_FOUND',
@@ -29,16 +29,11 @@ export const controller = async (req, res) => {
 	});
 };
 
-/**
- * @param {object} settings
- * @param {BaseUiViewModel["cspNonce"]} settings.cspNonce
- */
-const getData = ({ cspNonce }) => {
+const getData = () => {
 	/**
 	 * @type ViewModel
 	 */
 	const data = {
-		cspNonce,
 		message:
 			'Page not found.</p><p>Did you go to this address manually? Try going back and following the links, or starting again at the <a href="/">first page</a>. That <i>should</i> fix it for you, fingers crossed.',
 		text: { title: `An error happened (404) — ${config.APP_FRIENDLY_NAME}` }

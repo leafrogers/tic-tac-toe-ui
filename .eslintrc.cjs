@@ -25,6 +25,12 @@ module.exports = {
 	},
 	overrides: [
 		{
+			files: ['shared/**/*.js'],
+			env: {
+				browser: true
+			}
+		},
+		{
 			files: ['**/*.test.js'],
 			env: {
 				jest: true
