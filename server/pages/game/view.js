@@ -1,4 +1,5 @@
 import { toHtmlDocString } from '../../helpers.js';
+import { styles } from './styles.js';
 import CoreGame from '../../../shared/components/core-game.js';
 
 /**
@@ -11,7 +12,7 @@ const renderCoreOnlyMessage = ({
 	playerId
 }) => `<form method="GET" class="core-only">
 			<fieldset>
-				<legend class="visually-hidden">Control your preferences</legend>
+				<legend>Control your preferences</legend>
 				<label for="input-auto-refresh">Automatically refresh every ten seconds, when it’s not your turn?</label>
 				<input type="checkbox" name="autoRefresh" value="true" id="input-auto-refresh"${
 					initialState === true ? ' checked' : ''
@@ -52,6 +53,7 @@ export const view = (
 	return toHtmlDocString({
 		body,
 		shouldAutoRefresh,
+		styles,
 		title: text.title
 	});
 };

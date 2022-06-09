@@ -18,7 +18,7 @@ export default class Cell extends CoreComponent {
 					<span class="cell__hit-area${
 						shouldHighlight ? ' cell__hit-area--highlight' : ''
 					}">
-						${cell}
+						<img src="/img/${cell.toLowerCase()}.svg" height="70" width="70" alt="" aria-hidden="true">
 					</span>
 				`;
 

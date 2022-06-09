@@ -15,6 +15,7 @@ const app = express();
 
 app.use(security);
 app.use(favicon('public/favicon.ico'));
+app.use(express.static('public', { maxAge: '1 day' }));
 
 app.get('/', catchRejections(home));
 app.post(
