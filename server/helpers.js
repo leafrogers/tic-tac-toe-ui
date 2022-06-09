@@ -53,6 +53,15 @@ export class HttpError extends Error {
 export const stripSpace = (string) =>
 	string.replace(/\n/g, '').replace(/\t/g, '').replace(/\s\s+/g, ' ');
 
+export const colors = new Map([
+	['dark-1', '#36163e'],
+	['mid-1', '#dd517e'],
+	['mid-2', '#e68e35'],
+	['mid-3', '#556cc9'],
+	['light-1', '#7a98ee'],
+	['light-2', '#fff0f5']
+]);
+
 /**
  * @param {object} settings
  * @param {string} settings.body
