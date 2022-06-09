@@ -1,5 +1,6 @@
 import express from 'express';
 import { disallowInProduction, security } from './middleware.js';
+import favicon from 'serve-favicon';
 import { catchRejections } from './helpers.js';
 
 import { controller as catchErrors } from './pages/error-catch-all.js';
@@ -13,6 +14,7 @@ import game from './pages/game/controller.js';
 const app = express();
 
 app.use(security);
+app.use(favicon('public/favicon.ico'));
 
 app.get('/', catchRejections(home));
 app.post(
