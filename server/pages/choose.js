@@ -45,6 +45,18 @@ export const controller = async (req, res, next) => {
 	res.send(view(data));
 };
 
+const styles = `
+	ol {
+		list-style: none;
+		padding: 0;
+	}
+
+	.share__cta,
+	.share__result {
+		margin-top: 0;
+	}
+`;
+
 /**
  * @param {CreatedPlayerModel} a
  * @param {CreatedPlayerModel} b
@@ -93,7 +105,7 @@ const view = ({ baseUrl, text, players }) => {
 		</ul>
 	`;
 
-	return toHtmlDocString({ body, title: text.title });
+	return toHtmlDocString({ body, styles, title: text.title });
 };
 
 /**
