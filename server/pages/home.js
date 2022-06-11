@@ -7,6 +7,7 @@ import config from '../config.js';
  */
 export const controller = async (_req, res) => {
 	const data = {
+		cspNonce: res.locals.cspNonce,
 		text: { createGame: 'Create a game', title: config.APP_FRIENDLY_NAME }
 	};
 

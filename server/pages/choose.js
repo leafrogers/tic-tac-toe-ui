@@ -32,6 +32,7 @@ export const controller = async (req, res, next) => {
 
 	const data = {
 		baseUrl: config.BASE_URL,
+		cspNonce: res.locals.cspNonce,
 		text: {
 			title: config.APP_FRIENDLY_NAME
 		},
@@ -76,7 +77,7 @@ const putChosenPlayerLast = (a, b) => {
 /**
  * @param {ViewModel} settings
  */
-const view = ({ baseUrl, text, players }) => {
+const view = ({ baseUrl, cspNonce, text, players }) => {
 	const body = `
 		<h1>${text.title}</h1>
 		<p>Almost there. Who do you want to play the game with?</p>
@@ -105,7 +106,7 @@ const view = ({ baseUrl, text, players }) => {
 		</ul>
 	`;
 
-	return toHtmlDocString({ body, styles, title: text.title });
+	return toHtmlDocString({ body, cspNonce, styles, title: text.title });
 };
 
 /**

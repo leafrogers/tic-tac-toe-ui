@@ -65,12 +65,14 @@ export const colors = new Map([
 /**
  * @param {object} settings
  * @param {string} settings.body
+ * @param {string} [settings.cspNonce]
  * @param {boolean} [settings.shouldAutoRefresh]
  * @param {string} [settings.styles]
  * @param {string} settings.title
  */
 export const toHtmlDocString = ({
 	body,
+	cspNonce = '',
 	shouldAutoRefresh = false,
 	styles = '',
 	title

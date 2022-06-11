@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import helmet from 'helmet';
 import config from './config.js';
 import { HttpError } from './helpers.js';
@@ -22,5 +23,17 @@ export const disallowInProduction = (_req, _res, next) => {
  * @param {NextFunction} next
  */
 export const security = (req, res, next) => {
-	helmet()(req, res, next);
+	res.locals.cspNonce = randomUUID();
+	helmet({
+		contentSecurityPolicy: {
+			directives: {
+				'script-src': [
+					`'nonce-${res.locals.cspNonce}'`,
+					`'strict-dynamic'`,
+					'https:',
+					`'unsafe-inline'`
+				]
+			}
+		}
+	})(req, res, next);
 };

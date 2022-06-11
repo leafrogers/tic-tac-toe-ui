@@ -29,7 +29,7 @@ const renderCoreOnlyMessage = ({
  * @param {GameOptionsModel} options
  */
 export const view = (
-	{ game, player, text },
+	{ game, cspNonce, player, text },
 	{ preferenceAutoRefresh, shouldAutoRefresh }
 ) => {
 	const body = `
@@ -52,6 +52,7 @@ export const view = (
 
 	return toHtmlDocString({
 		body,
+		cspNonce,
 		shouldAutoRefresh,
 		styles,
 		title: text.title
