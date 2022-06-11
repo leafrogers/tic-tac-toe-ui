@@ -10,6 +10,7 @@ import { controller as games } from './pages/games.js';
 import { controller as choose } from './pages/choose.js';
 import { controller as turn } from './pages/turn.js';
 import game from './pages/game/controller.js';
+import { read as apiRead, update as apiUpdate } from './pages/api-proxy.js';
 
 const app = express();
 
@@ -29,6 +30,13 @@ app.post(
 	'/games/:gameId/turn',
 	express.urlencoded({ extended: false }),
 	catchRejections(turn)
+);
+
+app.get('/api-proxy/games/:gameId', catchRejections(apiRead));
+app.post(
+	'/api-proxy/games/:gameId/turn',
+	express.json(),
+	catchRejections(apiUpdate)
 );
 
 app.get('/throw-error-in-prod', disallowInProduction);
