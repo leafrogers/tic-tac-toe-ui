@@ -4,6 +4,8 @@
   "description": "A UI for playing games of Tic-tac-toe via an accompanying API. Used as a playground for learning web stacks and general messing about.",
   "main": "server/init.js",
   "scripts": {
+    "build": "esbuild client/init.js --minify --bundle --outfile=public/js/init.js",
+    "build:watch": "npm run -s build -- --watch",
     "jest": "API_URL=https://test.com/api API_KEY=test-key BASE_URL=http://localhost:3001 node --experimental-vm-modules --no-warnings ./node_modules/.bin/jest",
     "lint": "npm run -s lint:syntax && npm run -s lint:types",
     "lint:syntax": "eslint \"**/*.js\" --ignore-pattern \"public/**\" && echo \"✓ Linted syntax and styling\"",
@@ -33,6 +35,7 @@
     "@types/node": "^17.0.34",
     "@types/serve-favicon": "^2.5.3",
     "@types/supertest": "^2.0.12",
+    "esbuild": "^0.14.29",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.5.3",

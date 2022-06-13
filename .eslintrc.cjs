@@ -25,7 +25,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: ['shared/**/*.js'],
+			files: ['client/**/*.js', 'shared/**/*.js'],
 			env: {
 				browser: true
 			}
