@@ -1,6 +1,6 @@
 import config from '../config.js';
 import { read as readGame } from '../services/game.js';
-import { stripSpace, toHtmlDocString } from '../helpers.js';
+import { HttpError, stripSpace, toHtmlDocString } from '../helpers.js';
 
 /**
  * @param {ExpressRequest} req
@@ -12,7 +12,8 @@ export const controller = async (req, res, next) => {
 	const { choice, players: playerIds } = req.query;
 
 	if (typeof playerIds !== 'string') {
-		throw new Error(
+		throw new HttpError(
+			400,
 			'Expected players query string to be a comma separated string of player IDs'
 		);
 	}
@@ -27,7 +28,7 @@ export const controller = async (req, res, next) => {
 	}
 
 	if (!playerIdsArray.length) {
-		throw new Error('Missing player data');
+		throw new HttpError(400, 'Missing player data');
 	}
 
 	const data = {

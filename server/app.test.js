@@ -130,7 +130,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 
 			const { status, text } = await request.get('/games/00000/choose');
 
-			expect(status).toBe(500);
+			expect(status).toBe(400);
 			expect(text).toContain(
 				'<p>Expected players query string to be a comma separated string of player IDs</p>'
 			);
@@ -143,7 +143,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 				'/games/00000/choose?players='
 			);
 
-			expect(status).toBe(500);
+			expect(status).toBe(400);
 			expect(text).toContain('<p>Missing player data</p>');
 		});
 	});
