@@ -1,5 +1,6 @@
 import express from 'express';
 import { disallowInProduction, security } from './middleware.js';
+import compression from 'compression';
 import favicon from 'serve-favicon';
 import { catchRejections } from './helpers.js';
 
@@ -15,6 +16,7 @@ import { read as apiRead, update as apiUpdate } from './pages/api-proxy.js';
 const app = express();
 
 app.use(security);
+app.use(compression());
 app.use(favicon('public/favicon.ico'));
 app.use(express.static('public', { maxAge: '1 day' }));
 
