@@ -17,6 +17,7 @@ export const controller = (error, req, res, next) => {
 
 	try {
 		const data = getData({
+			cspNonce: res.locals.cspNonce,
 			error,
 			status: error.status
 		});
@@ -44,16 +45,18 @@ export const controller = (error, req, res, next) => {
 
 /**
  * @param {object} settings
+ * @param {BaseUiViewModel["cspNonce"]} settings.cspNonce
  * @param {Error} settings.error
  * @param {number} settings.status
  *
  * @returns {ViewModel}
  */
-const getData = ({ error, status = 0 }) => {
+const getData = ({ cspNonce, error, status = 0 }) => {
 	const publicStatus = status < 400 ? 500 : status;
 
 	try {
 		return {
+			cspNonce,
 			text: {
 				title: `An error happened (${publicStatus}) — ${config.APP_FRIENDLY_NAME}`
 			},
@@ -62,6 +65,7 @@ const getData = ({ error, status = 0 }) => {
 		};
 	} catch (error) {
 		return {
+			cspNonce,
 			text: {
 				title: 'A confusing error happened'
 			},

@@ -31,6 +31,7 @@
  * @property {string} title
  *
  * @typedef BaseUiViewModel
+ * @property {string} cspNonce
  * @property {ViewText} text
  *
  * @typedef {BaseUiViewModel & ApiViewModel} GameUiViewModel

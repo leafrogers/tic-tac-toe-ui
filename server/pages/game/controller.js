@@ -43,7 +43,7 @@ const controller = async (req, res, next) => {
 		return next();
 	}
 
-	const data = getData({ game, playerId });
+	const data = getData({ cspNonce: res.locals.cspNonce, game, playerId });
 	const appSettings = getAppSettings({
 		autoRefreshQuery,
 		game,

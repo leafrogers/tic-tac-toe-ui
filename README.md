@@ -33,7 +33,7 @@ This app relies on the [tic-tac-toe API](https://github.com/leafrogers/tic-tac-t
 Steps for running this app:
 
 - Clone this repo to a local directory
-- In your terminal, run `npm install`
+- In your terminal, run `npm install && npm run build`
 - Optionally, run `npm test` to confirm that everything is set up properly. The output shouldn’t say the word “fail” or “failed” anywhere
 - Run `API_URL=http://localhost:3000/api API_KEY=hello BASE_URL=http://localhost:3001 npm start`
 - With your favourite web browser, go to the URL that’s logged in your terminal
@@ -45,8 +45,8 @@ Similar to the prior steps, but some varying commands to make it easier for
 checking your changes:
 
 - Clone this repo to a local directory
-- In your terminal, run `npm install`
-- After that’s finished, run `API_URL=http://localhost:3000/api API_KEY=hello BASE_URL=http://localhost:3001 npm run start:dev`
+- In your terminal, run `npm install && npm run build:watch`
+- Open a new terminal tab or window and run `API_URL=http://localhost:3000/api API_KEY=hello BASE_URL=http://localhost:3001 npm run start:dev`
 - Go to the URL that’s logged in the console output
 
 ### :pager: Contact

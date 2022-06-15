@@ -29,7 +29,7 @@ const renderCoreOnlyMessage = ({
  * @param {GameOptionsModel} options
  */
 export const view = (
-	{ game, player, text },
+	{ game, cspNonce, player, text },
 	{ preferenceAutoRefresh, shouldAutoRefresh }
 ) => {
 	const body = `
@@ -48,10 +48,17 @@ export const view = (
 				  })
 		}
 
+		<script type="module" nonce="${cspNonce}">
+			window.bootstrapData = {
+				game: ${JSON.stringify(game)},
+				player: ${JSON.stringify(player)}
+			};
+		</script>
 	`;
 
 	return toHtmlDocString({
 		body,
+		cspNonce,
 		shouldAutoRefresh,
 		styles,
 		title: text.title

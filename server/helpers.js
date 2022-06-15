@@ -65,18 +65,43 @@ export const colors = new Map([
 /**
  * @param {object} settings
  * @param {string} settings.body
+ * @param {string} [settings.cspNonce]
  * @param {boolean} [settings.shouldAutoRefresh]
  * @param {string} [settings.styles]
  * @param {string} settings.title
  */
 export const toHtmlDocString = ({
 	body,
+	cspNonce = '',
 	shouldAutoRefresh = false,
 	styles = '',
 	title
 }) => {
 	const maybeAutoRefresh = shouldAutoRefresh
 		? '\n\t\t<meta http-equiv="refresh" content="10">'
+		: '';
+	const maybeEnhancer = cspNonce
+		? `\n\t\t<script type="module" nonce="${cspNonce}">${stripSpace(`
+			const docEl = document.documentElement;
+			const currentScript = document.scripts[document.scripts.length - 1];
+			const script = document.createElement('script');
+
+			docEl.classList.remove('core');
+			docEl.classList.add('enhanced');
+
+			script.onerror = () => {
+				if (docEl.classList.contains('enhanced')) {
+					console.warn('Script loading failed. Reverting to core experience.');
+					docEl.classList.add('core');
+					docEl.classList.remove('enhanced');
+				}
+			};
+			script.async = false;
+			script.nonce = '${cspNonce}';
+			script.src = '/js/init.js';
+
+			currentScript.parentNode.insertBefore(script, currentScript);
+		</script>`)}`
 		: '';
 	const css = stripSpace(
 		`
@@ -203,7 +228,7 @@ export const toHtmlDocString = ({
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="Play tic-tac-toe (or noughts and crosses): the most boring game ever.">${maybeAutoRefresh}
-		<title>${title}</title>
+		<title>${title}</title>${maybeEnhancer}
 		<style>${css}</style>
 	</head>
 	<body>

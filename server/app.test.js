@@ -240,9 +240,81 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		});
 	});
 
+	describe('GET /api-proxy/games/:gameId', () => {
+		it('kinda proxies a call to the API but decorates the response with an extra object of the player who triggered the call', async () => {
+			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+
+			const { status, body } = await request
+				.get('/api-proxy/games/00000')
+				.set('Player-Id', '11111');
+
+			expect(status).toBe(200);
+			expect(body).toEqual({
+				player: newGame.game.players[0],
+				...newGame
+			});
+		});
+
+		it('serves a 404 if the game can’t be found', async () => {
+			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+
+			const { status } = await request
+				.get('/api-proxy/games/55555')
+				.set('Accept', 'application/json');
+
+			expect(status).toBe(404);
+		});
+
+		it('serves a 404 if the player can’t be found', async () => {
+			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+
+			const { status } = await request
+				.get('/api-proxy/games/00000')
+				.set('Player-Id', '55555');
+
+			expect(status).toBe(404);
+		});
+	});
+
+	describe('POST /api-proxy/games/:gameId/turn', () => {
+		it('accepts a valid form submission for a turn and returns game data', async () => {
+			nock(config.API_URL)
+				.post('/games/00000/turn', { cellToClaim: 8, playerId: '11111' })
+				.reply(200, newGame);
+
+			const { body, status } = await request
+				.post('/api-proxy/games/00000/turn')
+				.set('Accept', 'application/json')
+				.set('Content-Type', 'application/json')
+				.set('Player-ID', '11111')
+				.send({ cell: '8' });
+
+			expect(status).toBe(201);
+			expect(body).toEqual(newGame.game);
+		});
+
+		it('serves an error page if the API returns a 400', async () => {
+			nock(config.API_URL)
+				.post('/games/00000/turn')
+				.reply(400, { message: 'You did it wrong', status: 400 });
+
+			const { status, text } = await request
+				.post('/api-proxy/games/00000/turn')
+				.set('Accept', 'application/json')
+				.set('Content-Type', 'application/json')
+				.set('Player-ID', '11111')
+				.send({ cell: '8' });
+
+			expect(status).toBe(400);
+			expect(text).toContain(
+				'"message":"Error from API (400): You did it wrong"'
+			);
+		});
+	});
+
 	describe('Not found page', () => {
 		/**
-		 * @type {import("superagent").Response}
+		 * @type {supertest.Response}
 		 */
 		let response;
 
