@@ -21,6 +21,8 @@ import { read as apiRead, update as apiUpdate } from './pages/api-proxy.js';
 
 const app = express();
 
+app.set('etag', false);
+
 app.use(security);
 app.use(compression());
 app.use(favicon('public/favicon.ico'));
