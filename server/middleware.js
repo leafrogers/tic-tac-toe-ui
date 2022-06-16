@@ -5,6 +5,22 @@ import { HttpError } from './helpers.js';
 
 /**
  * @param {ExpressRequest} _req
+ * @param {ExpressResponse} res
+ * @param {NextFunction} next
+ */
+export const doNotCache = (_req, res, next) => {
+	res.setHeader(
+		'Cache-Control',
+		'no-store, no-cache, must-revalidate, proxy-revalidate'
+	);
+	res.setHeader('Pragma', 'no-cache');
+	res.setHeader('Expires', '0');
+
+	next();
+};
+
+/**
+ * @param {ExpressRequest} _req
  * @param {ExpressResponse} _res
  * @param {NextFunction} next
  */
