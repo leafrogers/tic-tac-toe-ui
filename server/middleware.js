@@ -20,6 +20,27 @@ export const doNotCache = (_req, res, next) => {
 };
 
 /**
+ * @param {number} maxAge
+ * @param {object} [options]
+ * @param {boolean} [options.isPrivate]
+ */
+export const cacheFor = (maxAge, { isPrivate = false } = {}) => {
+	/**
+	 * @param {ExpressRequest} _req
+	 * @param {ExpressResponse} res
+	 * @param {NextFunction} next
+	 */
+	return (_req, res, next) => {
+		res.setHeader(
+			'Cache-Control',
+			`${isPrivate ? 'private' : 'public'}, max-age=${maxAge}`
+		);
+
+		next();
+	};
+};
+
+/**
  * @param {ExpressRequest} _req
  * @param {ExpressResponse} _res
  * @param {NextFunction} next

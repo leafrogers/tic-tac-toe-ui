@@ -2,7 +2,12 @@ import express from 'express';
 import compression from 'compression';
 import favicon from 'serve-favicon';
 
-import { doNotCache, disallowInProduction, security } from './middleware.js';
+import {
+	cacheFor,
+	doNotCache,
+	disallowInProduction,
+	security
+} from './middleware.js';
 import { catchRejections } from './helpers.js';
 
 import { controller as catchErrors } from './pages/error-catch-all.js';
@@ -25,7 +30,7 @@ app.use(favicon('public/favicon.ico'));
 app.use(express.static('public', { maxAge: '1 day' }));
 app.use(doNotCache);
 
-app.get('/', catchRejections(home));
+app.get('/', cacheFor(60 * 60 * 24), catchRejections(home));
 app.post(
 	'/games',
 	express.urlencoded({ extended: false }),
