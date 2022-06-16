@@ -1,6 +1,6 @@
 # Tic-tac-toe UI
 
-[![CircleCI](https://circleci.com/gh/leafrogers/tic-tac-toe-ui.svg?style=svg)](https://circleci.com/gh/leafrogers/tic-tac-toe-ui)
+[![CircleCI](https://circleci.com/gh/leafrogers/tic-tac-toe-ui.svg?style=svg)](https://circleci.com/gh/leafrogers/tic-tac-toe-ui) [![Deploy main to Fly.io](https://github.com/leafrogers/tic-tac-toe-ui/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/leafrogers/tic-tac-toe-ui/actions/workflows/main.yml)
 
 A UI for playing games of tic-tac-toe via an [accompanying
 API](https://github.com/leafrogers/tic-tac-toe-api).
