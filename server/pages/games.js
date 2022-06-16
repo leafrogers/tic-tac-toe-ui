@@ -17,6 +17,6 @@ export const controller = async (req, res) => {
 	const playerChoiceId = playerChoice === 'O' ? players[0].id : players[1].id;
 
 	res.redirect(
-		`/games/${id}/choose?players=${players[0].id},${players[1].id}&choice=${playerChoiceId}`
+		`/games/${id}/share?players=${players[0].id},${players[1].id}&choice=${playerChoiceId}`
 	);
 };
