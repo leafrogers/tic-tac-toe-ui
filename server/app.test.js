@@ -51,7 +51,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 
 			expect(status).toBe(302);
 			expect(headers.location).toBe(
-				'/games/00000/choose?players=11111,22222&choice=11111'
+				'/games/00000/share?players=11111,22222&choice=11111'
 			);
 		});
 
@@ -64,12 +64,12 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		});
 	});
 
-	describe('GET /games/:gameId/choose', () => {
+	describe('GET /games/:gameId/share', () => {
 		it('serves a 200 for the player choice page when player O is chosen', async () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
 			const { status } = await request.get(
-				'/games/00000/choose?players=11111,22222&choice=11111'
+				'/games/00000/share?players=11111,22222&choice=11111'
 			);
 
 			expect(status).toBe(200);
@@ -79,7 +79,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
 			const { text } = await request.get(
-				'/games/00000/choose?players=11111,22222&choice=11111'
+				'/games/00000/share?players=11111,22222&choice=11111'
 			);
 
 			expect(text).toContain(
@@ -94,7 +94,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
 			const { status } = await request.get(
-				'/games/00000/choose?players=11111,22222&choice=22222'
+				'/games/00000/share?players=11111,22222&choice=22222'
 			);
 
 			expect(status).toBe(200);
@@ -104,7 +104,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
 			const { text } = await request.get(
-				'/games/00000/choose?players=11111,22222&choice=22222'
+				'/games/00000/share?players=11111,22222&choice=22222'
 			);
 
 			expect(text).toContain(
@@ -119,7 +119,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
 			const { status } = await request.get(
-				'/games/55555/choose?players=11111,22222'
+				'/games/55555/share?players=11111,22222'
 			);
 
 			expect(status).toBe(404);
@@ -128,7 +128,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		it('serves a 500 error if no players query string is provided', async () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
-			const { status, text } = await request.get('/games/00000/choose');
+			const { status, text } = await request.get('/games/00000/share');
 
 			expect(status).toBe(400);
 			expect(text).toContain(
@@ -139,9 +139,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		it('serves a 500 error if the players query string exists but is missing IDs', async () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
-			const { status, text } = await request.get(
-				'/games/00000/choose?players='
-			);
+			const { status, text } = await request.get('/games/00000/share?players=');
 
 			expect(status).toBe(400);
 			expect(text).toContain('<p>Missing player data</p>');
