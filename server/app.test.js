@@ -314,9 +314,7 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		it('sets a no-cache header for the homepage', async () => {
 			const { headers, status } = await request.get('/');
 			expect(status).toBe(200);
-			expect(headers['cache-control']).toEqual(
-				'no-store, no-cache, must-revalidate, proxy-revalidate'
-			);
+			expect(headers['cache-control']).toEqual('public, max-age=86400');
 		});
 
 		it('sets a no-cache header for the share page', async () => {
