@@ -37,7 +37,7 @@
     "@types/node": "^18.0.0",
     "@types/serve-favicon": "^2.5.3",
     "@types/supertest": "^2.0.12",
-    "esbuild": "^0.14.44",
+    "esbuild": "^0.14.45",
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.5.3",
