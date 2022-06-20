@@ -148,13 +148,17 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 
 	describe('GET /games/:gameId?player=:playerId', () => {
 		it('serves a 200', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=11111')
+				.reply(200, newGame);
 			const { status } = await request.get('/games/00000?player=11111');
 			expect(status).toBe(200);
 		});
 
 		it('contains a message for player ID 11111, stating it is their turn', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=11111')
+				.reply(200, newGame);
 			const { text } = await request.get('/games/00000?player=11111');
 			expect(text).toContain(
 				'<p role="status">It’s your turn. You’re <b>Player O</b>.</p>'
@@ -162,7 +166,9 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		});
 
 		it('contains a message for player ID 22222, stating it is the other player’s turn', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=22222')
+				.reply(200, newGame);
 			const { text } = await request.get('/games/00000?player=22222');
 			expect(text).toContain(
 				'<p role="status">It’s their turn. You’re <b>Player X</b>.</p>'
@@ -170,25 +176,33 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		});
 
 		it('contains a message for player ID 11111, stating that they won the game', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, gameWithWinner);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=11111')
+				.reply(200, gameWithWinner);
 			const { text } = await request.get('/games/00000?player=11111');
 			expect(text).toContain('You won');
 		});
 
 		it('contains a message for player ID 22222, stating that they lost the game', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, gameWithWinner);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=22222')
+				.reply(200, gameWithWinner);
 			const { text } = await request.get('/games/00000?player=22222');
 			expect(text).toContain('You lost');
 		});
 
 		it('contains a draw message when the game has ended with a draw', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, gameWithDraw);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=22222')
+				.reply(200, gameWithDraw);
 			const { text } = await request.get('/games/00000?player=22222');
 			expect(text).toContain('It was a draw');
 		});
 
 		it('contains a link to play a subsequent game when the current game has ended', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, gameWithWinner);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=22222')
+				.reply(200, gameWithWinner);
 			const { text } = await request.get('/games/00000?player=22222');
 			expect(text).toContain(
 				'<a href="/games/33333?player=22222" class="next-game-link">Play again?</a>'
@@ -202,7 +216,9 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		});
 
 		it('serves an error page if a player can’t be found', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=99999')
+				.reply(200, newGame);
 			const { status, text } = await request.get('/games/00000?player=99999');
 			expect(status).toBe(500);
 			expect(text).toContain('<p>Couldn’t find player</p>');
@@ -240,11 +256,13 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 
 	describe('GET /api-proxy/games/:gameId', () => {
 		it('kinda proxies a call to the API but decorates the response with an extra object of the player who triggered the call', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=11111')
+				.reply(200, newGame);
 
-			const { status, body } = await request
-				.get('/api-proxy/games/00000')
-				.set('Player-Id', '11111');
+			const { status, body } = await request.get(
+				'/api-proxy/games/00000?playerId=11111'
+			);
 
 			expect(status).toBe(200);
 			expect(body).toEqual({
@@ -266,9 +284,9 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		it('serves a 404 if the player can’t be found', async () => {
 			nock(config.API_URL).get('/games/00000').reply(200, newGame);
 
-			const { status } = await request
-				.get('/api-proxy/games/00000')
-				.set('Player-Id', '55555');
+			const { status } = await request.get(
+				'/api-proxy/games/00000?playerId=55555'
+			);
 
 			expect(status).toBe(404);
 		});
@@ -281,10 +299,9 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 				.reply(200, newGame);
 
 			const { body, status } = await request
-				.post('/api-proxy/games/00000/turn')
+				.post('/api-proxy/games/00000/turn?playerId=11111')
 				.set('Accept', 'application/json')
 				.set('Content-Type', 'application/json')
-				.set('Player-ID', '11111')
 				.send({ cell: '8' });
 
 			expect(status).toBe(201);
@@ -297,10 +314,9 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 				.reply(400, { message: 'You did it wrong', status: 400 });
 
 			const { status, text } = await request
-				.post('/api-proxy/games/00000/turn')
+				.post('/api-proxy/games/00000/turn?playerId=11111')
 				.set('Accept', 'application/json')
 				.set('Content-Type', 'application/json')
-				.set('Player-ID', '11111')
 				.send({ cell: '8' });
 
 			expect(status).toBe(400);
@@ -329,7 +345,9 @@ describe(`The ${config.APP_FRIENDLY_NAME} app`, () => {
 		});
 
 		it('sets a no-cache header for game pages', async () => {
-			nock(config.API_URL).get('/games/00000').reply(200, newGame);
+			nock(config.API_URL)
+				.get('/games/00000?playerId=11111')
+				.reply(200, newGame);
 			const { headers, status } = await request.get(
 				'/games/00000?player=11111'
 			);

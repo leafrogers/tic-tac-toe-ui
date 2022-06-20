@@ -26,22 +26,19 @@ export const create = async () => {
 /**
  * @param {object} settings
  * @param {GameModel["id"]} settings.gameId
- * @param {PlayerModel["id"]} [settings.playerId]
+ * @param {any} [settings.playerId]
  * @returns {Promise<GameModel>}
  */
 export const read = async ({ gameId, playerId }) => {
-	const optionalHeaders = {};
+	let optionalPlayerId = '';
 
-	if (playerId) {
-		optionalHeaders['Player-ID'] = playerId;
+	if (typeof playerId === 'string') {
+		optionalPlayerId = `?playerId=${playerId}`;
 	}
 
 	// @ts-ignore
-	const { game } = await fetch(`${gamesBaseUrl}/${gameId}`, {
-		headers: {
-			...headers,
-			...optionalHeaders
-		}
+	const { game } = await fetch(`${gamesBaseUrl}/${gameId}${optionalPlayerId}`, {
+		headers
 	})
 		.then((res) => res.json())
 		.catch(() => ({ game: undefined }));
@@ -52,16 +49,22 @@ export const read = async ({ gameId, playerId }) => {
 /**
  * @param {object} settings
  * @param {GameModel["id"]} settings.gameId
- * @param {PlayerModel["id"]} settings.playerId
+ * @param {any} settings.playerId
  * @param {number} settings.cellToClaim
  */
 export const sendTurn = async ({ gameId, playerId, cellToClaim }) => {
+	const body = { cellToClaim, playerId: '' };
+
+	if (typeof playerId === 'string') {
+		body.playerId = playerId;
+	}
+
 	const response = await fetch(`${gamesBaseUrl}/${gameId}/turn`, {
 		headers: {
 			'Content-Type': 'application/json',
 			...headers
 		},
-		body: JSON.stringify({ playerId, cellToClaim }),
+		body: JSON.stringify(body),
 		method: 'POST'
 	});
 
