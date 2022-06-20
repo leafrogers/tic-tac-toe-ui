@@ -6,10 +6,9 @@ const apiProxyBaseUrl = '/api-proxy';
  * @param {PlayerModel["id"]} settings.playerId
  */
 export const fetchGame = ({ gameId, playerId }) =>
-	fetch(`${apiProxyBaseUrl}/games/${gameId}`, {
+	fetch(`${apiProxyBaseUrl}/games/${gameId}?playerId=${playerId}`, {
 		headers: {
-			Accept: 'application/json',
-			'Player-ID': playerId
+			Accept: 'application/json'
 		}
 	}).then((response) => response.json());
 
@@ -39,11 +38,10 @@ export const sendTurn = async ({ form, gameId, playerId }) => {
 		throw new Error('Expected chosen cell value to be a number from 0 to 8');
 	}
 
-	return fetch(`${apiProxyBaseUrl}/games/${gameId}/turn`, {
+	return fetch(`${apiProxyBaseUrl}/games/${gameId}/turn?playerId=${playerId}`, {
 		headers: {
 			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			'Player-ID': playerId
+			'Content-Type': 'application/json'
 		},
 		method: 'POST',
 		body: JSON.stringify({ cell })

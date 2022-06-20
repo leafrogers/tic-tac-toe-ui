@@ -7,7 +7,7 @@ import { read as readGame, sendTurn } from '../services/game.js';
  */
 export const read = async (req, res, next) => {
 	const { gameId } = req.params;
-	const playerId = req.get('Player-ID') || '';
+	const playerId = req.query['playerId'];
 	const game = await readGame({ gameId, playerId });
 	const player = game?.players.find((player) => player.id === playerId);
 
@@ -25,7 +25,7 @@ export const read = async (req, res, next) => {
  */
 export const update = async (req, res) => {
 	const { gameId } = req.params;
-	const playerId = req.get('Player-ID') || '';
+	const { playerId } = req.query;
 	const cellToClaim = Number(req.body.cell);
 	const game = await sendTurn({ gameId, playerId, cellToClaim });
 
