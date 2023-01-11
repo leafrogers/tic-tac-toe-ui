@@ -21,7 +21,7 @@ export const doNotCache = (_req, res, next) => {
 
 /**
  * @param {number} maxAge
- * @param {object} [options]
+ * @param {object} options
  * @param {boolean} [options.isPrivate]
  */
 export const cacheFor = (maxAge, { isPrivate = false } = {}) => {
