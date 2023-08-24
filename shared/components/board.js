@@ -45,8 +45,8 @@ class Board extends CoreComponent {
 
 		return `
 			<form action="/games/${gameId}/turn?player=${player.id}${
-			preferenceAutoRefresh ? '&autoRefresh=true' : ''
-		}" method="POST" class="board">
+				preferenceAutoRefresh ? '&autoRefresh=true' : ''
+			}" method="POST" class="board">
 				<fieldset${hasEnded || !player.isTurn ? ` disabled="true"` : ''}>
 					<legend class="visually-hidden">Which cell would you like to claim?</legend>
 					<table>

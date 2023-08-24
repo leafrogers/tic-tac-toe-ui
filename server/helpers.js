@@ -127,8 +127,8 @@ export const toHtmlDocString = ({
 
 			body {
 				background: ${colors.get('dark-1')} linear-gradient(${colors.get(
-			'dark-1'
-		)}, ${colors.get('mid-1')}) fixed;
+					'dark-1'
+				)}, ${colors.get('mid-1')}) fixed;
 				color: ${colors.get('light-2')};
 				font-family: 'Sora', arial, sans-serif;
 				line-height: 1.6;
@@ -146,8 +146,8 @@ export const toHtmlDocString = ({
 				-webkit-background-clip: text;
 				background-clip: text;
 				background-image: linear-gradient(${colors.get('mid-2')}, ${colors.get(
-			'mid-1'
-		)});
+					'mid-1'
+				)});
 				font-size: 2rem;
 				line-height: 1;
 				margin: 2rem;
@@ -195,8 +195,8 @@ export const toHtmlDocString = ({
 
 			button {
 				background-image: linear-gradient(${colors.get('mid-2')}, ${colors.get(
-			'mid-1'
-		)});
+					'mid-1'
+				)});
 				border-radius: 9999px;
 				border: 0;
 				color: ${colors.get('dark-1')};

@@ -6,8 +6,8 @@ export default class NextGameLink extends CoreComponent {
 			this.props;
 		return `
 			<p><a href="/games/${nextGameId}?player=${nextPlayerId}${
-			preferenceAutoRefresh ? '&autoRefresh=true' : ''
-		}" class="next-game-link">${text}</a></p>
+				preferenceAutoRefresh ? '&autoRefresh=true' : ''
+			}" class="next-game-link">${text}</a></p>
 		`;
 	}
 }
